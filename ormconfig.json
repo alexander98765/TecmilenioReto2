@@ -1,0 +1,10 @@
+{
+    "type": "mysql",
+    "host": "localhost",
+    "port": 3306,
+    "username": "root",
+    "password": "Mapacha.77",
+    "database": "biblioteca",
+    "entities": ["dist/**/*.entity{.ts,.js}"],
+    "synchronize": false
+}

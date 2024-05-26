@@ -1,9 +1,12 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { Author } from './author.entity'
-import { AuthorDto } from './author.dto'
+import { Author } from './entity/author.entity'
+import { AuthorDto } from './dto/author.dto'
 import { InjectRepository } from '@nestjs/typeorm'; 
 import { Repository } from 'typeorm';
 
+/**
+     * Layer to make all author operations in database
+ */
 @Injectable()
 export class AuthorService {
     
@@ -30,7 +33,7 @@ export class AuthorService {
      *
      * @param id - the author id
      *
-     * @returns An array of type Author found in database
+     * @returns An object of type Author found in database
      */
     async findAuthor(id: number): Promise<Author> {
         const user = await this.authorRepository.findOne({
@@ -58,6 +61,9 @@ export class AuthorService {
      *
      * @param authorId - Author id to be updated
      * @param newAuthor - Author object to be updated in database
+     * 
+     * @remarks
+     * This method validates if author to be updated exists, if not, an exception is thrown
      *
      * @returns Author updated
      */
@@ -74,6 +80,9 @@ export class AuthorService {
      * Delete an existing author in database
      *
      * @param authorId - Author id to be deleted
+     * 
+     * @remarks
+     * This method validates if author to be deleted exists, if not, an exception is thrown
      *
      * @returns response confirmation
      */

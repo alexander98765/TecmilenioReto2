@@ -1,6 +1,17 @@
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException } from '@nestjs/common';
 import { Request, Response } from 'express';
 
+/**
+   * Configure httpexception filter
+   *
+   * @implements ExceptionFilter
+   * 
+   * Catch HTTPExceptions and print a customized message to user
+   * 
+   * @remarks
+   * This module is activated inside of main.ts file
+   * 
+*/
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
@@ -15,7 +26,9 @@ export class HttpExceptionFilter implements ExceptionFilter {
         statusCode: status,
         timestamp: new Date().toISOString(),
         path: request.url,
-        description: exception.message
+        description: exception["response"]["message"],
+        detail: exception.message
+        
       });
   }
 }

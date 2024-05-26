@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Role } from '../../user/role.enum';
-import { IsStrongPassword, Matches, MaxLength, MinLength } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, IsStrongPassword, Matches, MaxLength, MinLength } from 'class-validator';
 
 /**
     * Represents an Auth DTO to login into system
@@ -17,6 +17,8 @@ export class AuthDto {
     example: 'alex@gmail.com',
     required: true
   })
+  @IsNotEmpty()
+  @IsEmail()
   readonly username: string;
   
   /**

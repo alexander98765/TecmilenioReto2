@@ -48,7 +48,8 @@ export class ReservationService {
                 }
             },
         });
-        if(reservations.length == 0){
+        if(reservations == null){
+        //if(reservations.length == 0){
             throw new HttpException(`No reservations were found in database`, HttpStatus.NOT_FOUND)
         }
         return reservations;        
@@ -124,8 +125,6 @@ export class ReservationService {
                     }
                 },
         });
-        console.log("reservacion")
-        console.log(reservation)
         if(!reservation){
             throw new HttpException(`Specified reservation by folio reservacion: ${folioReservacion} was not found`, HttpStatus.NOT_FOUND)
         }

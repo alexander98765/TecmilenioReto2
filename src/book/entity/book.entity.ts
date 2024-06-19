@@ -16,6 +16,23 @@ import { ApiProperty } from '@nestjs/swagger';
 export class Book {
 
   /**
+    * @constructor
+    * @public
+    * 
+    * Constructor to initialize book new object
+    * 
+  */
+  constructor(idLibro, nombre, totalPaginas, editorial, fechaPublicacion, genero, descripcion) {
+    this.idLibro = idLibro;
+    this.nombre = nombre;
+    this.totalPaginas = totalPaginas;
+    this.editorial = editorial;
+    this.fechaPublicacion = fechaPublicacion
+    this.genero = genero
+    this.descripcion = descripcion
+  }
+
+  /**
     * Book unique identificator
     * @public
   */

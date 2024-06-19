@@ -15,6 +15,25 @@ import { ApiProperty } from '@nestjs/swagger';
 export class User {
 
   /**
+    * @constructor
+    * @public
+    * 
+    * Constructor to initialize user new object
+    * 
+  */
+  constructor(idUsuario, nombre, apellidoPaterno, apellidoMaterno, edad, correoElectronico, perfil, activo, nombreUsuario){
+    this.idUsuario = idUsuario;
+    this.nombre = nombre;
+    this.apellidoPaterno = apellidoPaterno;
+    this.apellidoMaterno = apellidoMaterno;
+    this.edad = edad;
+    this.correoElectronico = correoElectronico;
+    this.perfil = perfil;
+    this.activo = activo;
+    this.nombreUsuario = nombreUsuario;
+  }
+
+  /**
     * User unique identificator
     * @public
   */

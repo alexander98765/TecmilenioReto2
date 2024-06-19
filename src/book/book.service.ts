@@ -29,7 +29,8 @@ export class BookService {
                 author: true
             }
         })        
-        if(books.length == 0){
+        //if(books.length == 0){
+        if(books == null){
             throw new HttpException(`Books were not found in database`, HttpStatus.NOT_FOUND)
         }
         return books;                 
@@ -93,7 +94,7 @@ export class BookService {
      *
      * @returns Book created
      */
-    async createBook(book: BookDto): Promise<Book>{
+    async createBook(book: BookDto): Promise<Book>{        
         const authorFound = await this.authorService.findAuthor(book.idAutor)
         if(!authorFound){
             throw new HttpException('Author not found', HttpStatus.NOT_FOUND)
@@ -113,8 +114,9 @@ export class BookService {
      * @returns response confirmation
      */
     async deleteBook(bookId: number) {
-        let toDelete = await this.bookRepository.findOne({where: { idLibro:bookId }}); 
-        if(!toDelete){
+        let toDelete = await this.bookRepository.findOne({where: { idLibro:bookId }});         
+        //if(!toDelete){
+        if(toDelete == null){            
             throw new HttpException(`Specified book id ${bookId} was not found`, HttpStatus.NOT_FOUND)
         }        
         return await this.bookRepository.delete({ idLibro : bookId });                 
@@ -133,14 +135,14 @@ export class BookService {
      * @returns Book updated
      */
     async updateBook(bookId: number, newBook: BookDto) {     
-        let toUpdate = await this.bookRepository.findOne({where: { idLibro:bookId }}); 
+        let toUpdate = await this.bookRepository.findOne({where: { idLibro:bookId }});         
         if(!toUpdate){
             throw new HttpException(`Specified book id ${bookId} was not found`, HttpStatus.NOT_FOUND)
-        } 
-        const authorFound = await this.authorService.findAuthor(newBook.idAutor)
-        if(!authorFound){
+        }         
+        const authorFound = await this.authorService.findAuthor(newBook.idAutor)        
+        if(!authorFound){            
             throw new HttpException('Author was not found', HttpStatus.NOT_FOUND)
-        }
+        }        
         let updated = Object.assign(toUpdate, newBook); 
         return this.bookRepository.save(updated);
     }

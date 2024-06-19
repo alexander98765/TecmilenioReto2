@@ -92,6 +92,7 @@ export class ReservationController {
      *  
      */
     @ApiResponse({ status: 200, description: 'Get specific reservation registered in database by id.'})
+    @ApiResponse({ status: 400, description: 'Reservation was not found in database.'})
     @ApiResponse({ status: 401, description: 'User does not have enough permissions to execute this endpoint.'})
     @ApiResponse({ status: 404, description: 'Reservation was not found in database.'})
     @ApiResponse({ status: 403, description: 'Forbidden, user does not have enough permissions.'})
@@ -146,7 +147,6 @@ export class ReservationController {
     @Get('/folio/:folioReservacion')
     async findReservationByFolioReservacion(@Param('folioReservacion') folioReservacion: string){
         try{
-                console.log("folioReservacion " + folioReservacion)
             return await this.reservationService.findReservationByFolioReservacion(folioReservacion)
         }catch(ex){
             throw new HttpException(`Error while fetching the reservation by folio reservacion: ${ex}` + ex, HttpStatus.BAD_REQUEST)                        
@@ -185,9 +185,9 @@ export class ReservationController {
         type: Reservation,
         description: 'Insert a new reservation in database',
      })
-    @ApiTags('Reservation')
-    @ApiBearerAuth()
+    @ApiTags('Reservation')    
     @Throttle( { default: { ttl: 30000, limit: 3 } })
+    @ApiBearerAuth()
     @HasRoles(Role.Administrador, Role.Usuario)
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @Post()
@@ -228,8 +228,8 @@ export class ReservationController {
     @ApiResponse({ status: 500, description: 'Server side error.'})
     @ApiOperation({ summary: 'Update specific reservation registered in database by id. ONLY users with "Administrador" role are able to execute this endpoint' })
     @ApiTags('Reservation')
-    @ApiBearerAuth()
     @Throttle( { default: { ttl: 30000, limit: 3 } })
+    @ApiBearerAuth()
     @HasRoles(Role.Administrador)
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @Put(':reservationId')

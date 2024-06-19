@@ -1,0 +1,75 @@
+import { Test, TestingModule } from '@nestjs/testing'
+import { INestApplication, LoggerService } from '@nestjs/common'
+import * as request from 'supertest'
+import { AppModule } from './app.module'
+import { AuthorModule } from './author/author.module';
+import { User } from './user/entity/user.entity';
+
+describe('AppController (e2e)', () => {
+    let app: INestApplication
+
+    beforeAll(async () => {
+        const moduleFixture: TestingModule = await Test.createTestingModule({
+            imports: [AppModule, AuthorModule],
+        }).compile()
+
+        app = moduleFixture.createNestApplication()
+        //app.useLogger(new TestLogger())
+        await app.init()
+
+        // tip: access the database connection via
+        // const connection = app.get(Connection)
+        // const a = connection.manager
+    })
+
+    afterAll(async () => {
+        await Promise.all([
+            app.close(),
+        ])
+    })
+
+    /*it('/ (GET)', () => {
+        console.log("End 2 End")
+        return request(app.getHttpServer())
+            .get('/ap')
+            .expect(200)
+            .expect('Hello World!')
+    })*/
+
+    /*describe('Authentication', () => {
+        let jwtToken: string        
+
+        describe('AuthModule', () => {
+            // assume test data includes user test@example.com with password 'password'
+            it('authenticates user with valid credentials and provides a jwt token', async () => {
+              const response = await request(app.getHttpServer())
+                .post('/auth/login')
+                .send({ username: 'test@gmail.com', password: 'Test.123' })
+                .expect(201)
+      
+              // set jwt token for use in subsequent tests
+              jwtToken = response.body.accessToken
+              expect(jwtToken).toMatch(/^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$/) // jwt regex
+            })
+        });
+
+    });*/
+
+    /*describe('Authentication', () => {
+        
+        describe('AuthModule', () => {
+            // assume test data includes user test@example.com with password 'password'
+            it('authenticates user with valid credentials and provides a jwt token', async () => {
+              const response = await request(app.getHttpServer())
+                .get('/author')            
+                .expect(200)
+                
+              // set jwt token for use in subsequent tests
+              //jwtToken = response.body.accessToken
+              //expect(jwtToken).toMatch(/^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$/) // jwt regex
+            })
+        });
+
+    });*/
+
+});

@@ -55,8 +55,6 @@ export class AuthController {
   @ApiResponse({ status: 429, description: 'Too many request.'})
   @ApiResponse({ status: 500, description: 'Server side error.'})
   @ApiOperation({ summary: 'Allows users to login to their account and returns a temporary JWT token.' })
-  //@ApiParam({name: 'password', required: true, description: 'User´s password'})
-  //@ApiParam({name: 'username', required: true, description: 'User´s email'})  
   @ApiOkResponse({
     description: 'If user was logged in correctly, a temporary token will be given to user.',
     type: "JWT temporary Token",

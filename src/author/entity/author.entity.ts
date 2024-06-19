@@ -13,6 +13,14 @@ import { ApiProperty } from '@nestjs/swagger';
 @Entity({name : 'autores'})
 export class Author {
 
+  constructor(idAutor, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento) {
+    this.idAutor = idAutor;
+    this.nombre = nombre;
+    this.apellidoPaterno = apellidoPaterno;
+    this.apellidoMaterno = apellidoMaterno;
+    this.fechaNacimiento = fechaNacimiento
+  }
+
   /**
     * Author unique identificator
     * @public

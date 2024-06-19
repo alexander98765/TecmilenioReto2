@@ -34,6 +34,7 @@ import { ConfigModule } from '@nestjs/config';
     ReservationModule, UserModule, BookModule, AuthorModule, AuthModule ],
   controllers: [],
   providers: [
+    AppService,
     {
     provide: APP_GUARD,
     useClass: ThrottlerGuard,

@@ -1,0 +1,32 @@
+import { Test, TestingModule } from '@nestjs/testing';
+import { INestApplication } from '@nestjs/common';
+import * as request from 'supertest';
+import { AppModule } from '../src/app.module';
+import { UserController } from '../src/user/user.controller';
+import { UserService } from '../src/user/user.service';
+import { UserModule } from '../src/user/user.module'; 
+import { Repository } from 'typeorm';
+import { User } from './../src/user/entity/user.entity'
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { AuthGuard } from '@nestjs/passport';
+
+describe('AppController (e2e)', () => {
+  let app: INestApplication;
+
+  beforeEach(async () => {
+    const moduleFixture: TestingModule = await Test.createTestingModule({
+      imports: [AppModule],
+    }).compile()
+
+    app = moduleFixture.createNestApplication();
+    await app.init();
+  });
+
+  it('/ (GET)', () => { 
+    return request(app.getHttpServer()) 
+      .get('/ap') 
+      .expect(200) 
+      .expect('Hello World!'); 
+  });
+
+});

@@ -64,7 +64,7 @@ export class AuthorController {
     @HasRoles(Role.Administrador)
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @Get()
-    async findAll(): Promise<Author[]>{
+    async findAll(){
         try{
             return await this.authorService.findAll();
         }catch(ex){
@@ -108,7 +108,7 @@ export class AuthorController {
      @HasRoles(Role.Administrador)
      @UseGuards(AuthGuard('jwt'), RolesGuard)
     @Get(':authorId')
-    async findAuthor(@Param('authorId') authorId: number){
+    async findAuthorById(@Param('authorId') authorId: number){
         try{
             return await this.authorService.findAuthor(authorId)
         }catch(ex){

@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Param, Delete, Put, HttpException, HttpStatus, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Delete, Put, HttpException, HttpStatus, UseGuards, ConsoleLogger } from '@nestjs/common';
 import { UserService } from './user.service'
 import { User } from './entity/user.entity'
 import { UserDto } from './dto/user.dto'
@@ -64,8 +64,7 @@ export class UserController {
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @Get()
     async findAll(){
-        try{
-            console.log("inseide users get controle")
+        try{            
             return await this.userService.findAll();
         }catch(ex){
             throw new HttpException(`Error while fetching all users: ${ex}`, HttpStatus.INTERNAL_SERVER_ERROR)
@@ -183,7 +182,7 @@ export class UserController {
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @Post()
     createUser(@Body() newUser: UserDto){
-        try{
+        try{            
             return this.userService.createUser(newUser);   
         }catch(ex){
             throw new HttpException(`Error while creating the user ${ex}`, HttpStatus.INTERNAL_SERVER_ERROR)

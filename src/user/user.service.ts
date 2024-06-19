@@ -23,9 +23,10 @@ export class UserService {
      *
      * @returns An object of type User found in database
      */
-    async findAll(): Promise<User[]> {
-        const users = await this.userRepository.find(); 
-        if(users.length == 0){
+    async findAll(): Promise<User[]> {        
+        const users = await this.userRepository.find();         
+        //if(users.length == 0){
+        if(users == null){
             throw new NotFoundException(`Users were not found`);
         }
         return users;
@@ -42,7 +43,8 @@ export class UserService {
         const user = await this.userRepository.findOne({
             where: { idUsuario:id }
         });
-        if(!user){
+        if(user == null){
+        //if(!user){
             throw new HttpException(`Specified user id ${id} was not found`, HttpStatus.INTERNAL_SERVER_ERROR)
         }
         return user;                    
@@ -78,15 +80,17 @@ export class UserService {
         if(idUsuario == 0){
             user = await this.userRepository.findOne({
                 where: { correoElectronico }
-            });
+            });            
         }else{
             user = await this.userRepository.findOne({
                 where: { correoElectronico , idUsuario: Not(idUsuario)}
             });
-        }        
+        }       
         if(user){
-            flag = true;            
-        }    
+            if(user.correoElectronico == correoElectronico){
+                flag = true;            
+            }
+        }            
         return flag;                    
     }
 
@@ -103,10 +107,10 @@ export class UserService {
      */
     async createUser(newUser: UserDto) {   
         let defulttPassword = "Library1234"
-        const existingUser = await this.findUserByMailResponse(newUser.correoElectronico, 0)        
-        if (existingUser) {            
+        const existingUser = await this.findUserByMailResponse(newUser.correoElectronico, 0)       
+        if (existingUser ) {            
             throw new HttpException(`Specified email ${newUser.correoElectronico} already exists, use another email or login to your account.`, HttpStatus.BAD_REQUEST);
-        }    
+        } 
         const salt = await bcrypt.genSalt();
         //const hashedPassword = await bcrypt.hash(newUser.contrasena, salt);        
         const hashedPassword = await bcrypt.hash(defulttPassword, salt);        
@@ -122,8 +126,9 @@ export class UserService {
      * @returns response confirmation
      */
     async deleteUser(userId: number): Promise<any> {
-        let toDelete = await this.userRepository.findOne({where: { idUsuario:userId }});
-        if(!toDelete){
+        let toDelete = await this.userRepository.findOne({where: { idUsuario:userId }});     
+        if(toDelete == null){
+        //if(!toDelete){
             throw new HttpException(`Specified user id ${userId} was not found to delete`, HttpStatus.NOT_FOUND)
         } 
         return await this.userRepository.delete({ idUsuario : userId });               
@@ -145,10 +150,11 @@ export class UserService {
      */
     async updateUser(userId: number, newUser: UserDto) {
         let toUpdate = await this.userRepository.findOne({where: { idUsuario:userId }});
-        if(!toUpdate){
+        if(toUpdate == null){
+        //if(!toUpdate){
             throw new HttpException(`Specified user id ${userId} was not found to update`, HttpStatus.NOT_FOUND)
         }         
-        const existingUser = await this.findUserByMailResponse(newUser.correoElectronico, userId)        
+        const existingUser = await this.findUserByMailResponse(newUser.correoElectronico, userId)                
         if (existingUser) {            
             throw new HttpException(`Specified email ${newUser.correoElectronico} already exists, use another email.`, HttpStatus.BAD_REQUEST);
         }

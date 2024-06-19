@@ -67,7 +67,7 @@ export class UserDto {
         required: true
     })
     @IsEmail()
-    readonly correoElectronico: string;
+     correoElectronico: string;
 
     /**
         * Users role to enable/disable endpoints

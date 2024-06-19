@@ -16,6 +16,8 @@ import helmet from 'helmet';
    * Configure Swagger tool
 */
 async function bootstrap() {
+  //const PORT = process.env.PORT || 3000;
+  //console.log("PORT TE " + PORT)
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('biblioteca/');
   app.useGlobalFilters(new HttpExceptionFilter());
@@ -30,6 +32,7 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
+  
   await app.listen(3000);  
 }
 bootstrap();

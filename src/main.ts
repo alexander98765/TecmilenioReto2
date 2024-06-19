@@ -15,9 +15,7 @@ import helmet from 'helmet';
    * Cponfigure global pipes for DTOs validations
    * Configure Swagger tool
 */
-async function bootstrap() {
-  //const PORT = process.env.PORT || 3000;
-  //console.log("PORT TE " + PORT)
+async function bootstrap() {    
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('biblioteca/');
   app.useGlobalFilters(new HttpExceptionFilter());
@@ -32,7 +30,7 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-  
-  await app.listen(3000);  
+  const PORT = process.env.PORT || 3000;
+  await app.listen(PORT);  
 }
 bootstrap();

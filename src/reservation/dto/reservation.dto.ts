@@ -1,5 +1,3 @@
-import { User } from '../../user/entity/user.entity'
-import { Book } from '../../book/entity/book.entity'
 import { ApiProperty } from '@nestjs/swagger';
 import { IsISO8601, IsInt, IsNotEmpty } from 'class-validator';
 

@@ -23,7 +23,7 @@ export class AuthorService {
     async findAll(): Promise<Author[]> {
         const authors = await this.authorRepository.find();       
         if(authors.length == 0){
-            throw new HttpException(`Author were not found in database`, HttpStatus.NOT_FOUND)
+            throw new HttpException(`Authors were not found in database`, HttpStatus.NOT_FOUND)
         }       
         return  authors;
     }

@@ -2,7 +2,6 @@ import { Controller, Post, Body, Get, Param, Delete, Put, HttpException, HttpSta
 import { UserService } from './user.service'
 import { User } from './entity/user.entity'
 import { UserDto } from './dto/user.dto'
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 import { HasRoles } from '../auth/has-roles.decorator';
 import { Role } from '../user/role.enum';

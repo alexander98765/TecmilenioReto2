@@ -124,6 +124,8 @@ export class ReservationController {
      *      responses: 
      *          200: 
      *              description: get reservation found by folioReservacion
+     *          400:
+     *              description: reservations were not found in database
      *          401:
      *              description: User does not have enough permissions to execute this endpoint.
      *          403:
@@ -137,6 +139,7 @@ export class ReservationController {
      *  
      */
     @ApiResponse({ status: 200, description: 'Get specific reservation registered in database by folioReservacion.'})
+    @ApiResponse({ status: 400, description: 'Reservation was not found in database.'})
     @ApiResponse({ status: 401, description: 'User does not have enough permissions to execute this endpoint.'})
     @ApiResponse({ status: 404, description: 'Reservation was not found in database.'})
     @ApiResponse({ status: 403, description: 'Forbidden, user does not have enough permissions.'})

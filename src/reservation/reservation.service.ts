@@ -48,8 +48,8 @@ export class ReservationService {
                 }
             },
         });
-        if(reservations == null){
-        //if(reservations.length == 0){
+        //if(reservations == null){
+        if(reservations.length == 0){
             throw new HttpException(`No reservations were found in database`, HttpStatus.NOT_FOUND)
         }
         return reservations;        
